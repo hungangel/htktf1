@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ thống kế toán - Quản lí</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+
+<link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+<link rel="stylesheet"
+	href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link rel="stylesheet" href="assets/css/table/style1.css">
+<link rel="shortcut icon" href="assets/images/favicon.svg"
+	type="image/x-icon">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+</head>
+
+<body>
+	<div id="app">
+		<div id="sidebar" class="active">
+			<div class="sidebar-wrapper active">
+				<div class="sidebar-header">
+					<div class="d-flex justify-content-between">
+						<div class="logo">
+							<a href="index.html"><img style="width: 50px; height: 50px"
+								src="assets/images/logo/account_logo.jpg" alt="Logo"th:text="${session.nguoidung.nhanvien.tenNV}"></a>
+						</div>
+						<div class="toggler">
+							<a href="#" class="sidebar-hide d-xl-none d-block"><i
+								class="bi bi-x bi-middle"></i></a>
+						</div>
+					</div>
+				</div>
+				<input type="text" hidden="true" th:value="${session.nguoidung.nhanvien.tenNV}">
+				<input id="maNV" type="text"  hidden="true"  th:value="${session.nguoidung.nhanvien.maNV}">
+				<div class="sidebar-menu ">
+					<ul class="menu">
+						<li class="sidebar-title">Menu</li>
+						<li class="sidebar-item  sidebar-item active"><a type="submit" onclick="loadDivTrangChu1()" class='sidebar-link' > <i class="bi bi-grid-fill" ></i> <span>Trang chủ</span></a>
+						</li>
+						<li class="sidebar-item  has-sub"><a 
+							class='sidebar-link'> <i class="bi bi-file-earmark-spreadsheet-fill"></i> <span>Quản lí mua bán</span>
+						</a>
+							<ul class="submenu ">
+								<li class="submenu-item  has-sub"><a  class='sidebar-link' 
+									type="submit" onclick="loadThemhoadon()"> <i class="bi "></i> <span>Nhập hóa đơn hàng hóa </span></a>
+								</li>
+								<li class="submenu-item  has-sub"><a class='sidebar-link' 
+									type="submit" onclick="loadXemhoadon()"> <i class="bi "></i> <span>Xem danh sách hóa đơn</span></a>
+								</li>
+								<li class="submenu-item  has-sub"><a class='sidebar-link' 
+									type="submit" onclick="loadXemkhachhang()"> <i class="bi "></i> <span>Quản lí khách hàng</span></a>
+								</li>	
+							</ul>
+						</li>
+						<li class="sidebar-item  has-sub"><a  class='sidebar-link'> <i class="bi bi-person-badge-fill"></i> <span>Tài khoản</span> </a>
+							<ul class="submenu">
+								<li class="submenu-item"><a type="submit" onclick="loadDoiMatKhauDiv()" >Thay đổi mật khẩu</a></li>
+								<li class="submenu-item "><a style="text-decoration:none" type="submit" th:href="@{/nhanvien/dangxuat}">Đăng xuất</a>  </li>
+							</ul>
+						</li>
+					 </ul>	
+                </div>
+					<button class="sidebar-toggler btn x">
+						<i data-feather="x"></i>
+					</button>
+				</div>
+			</div>
+			<div id="main" style="margin-top:0px;padding:0px 0px 0px 10px">
+					<div style = "background-image: url('assets/images/background4.png');height:100vh;margin-top:0px;padding-top:0px">
+						
+					</div>
+			</div>
+		</div>
+		
+	<div>
+		
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript">	
+		var maNV;
+		onload();
+		function onload() {
+			maNV=  document.getElementById("maNV").value;
+			console.log(maNV);
+		}
+		function loadThemhoadon(){
+			$('#main').empty();
+			$('#main').load("/nvkd/themhoadon",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadXemhoadon(){
+			$('#main').empty();
+			$('#main').load("/nvkd/xemhoadon",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadXemkhachhang(){
+			$('#main').empty();
+			$('#main').load("/nvkd/xemkhachhang1html",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadDoiMatKhauDiv(){
+			$('#main').empty();
+			$('#main').load("/nhanvien/doimatkhau",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            	
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadDivTrangChu1(){
+			$('#main').empty();
+			$('#main').load("/trangchuhtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		</script>
+
+</body>
+
+</html>

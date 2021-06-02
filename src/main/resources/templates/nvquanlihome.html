@@ -1,0 +1,388 @@
+1q`1<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hệ thống kế toán - Quản lí</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+
+<link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+<link rel="stylesheet"
+	href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link rel="stylesheet" href="assets/css/table/style1.css">
+<link rel="stylesheet" href="assets/css/table/style1.css">
+<link rel="shortcut icon" href="assets/images/favicon.svg"
+	type="image/x-icon">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+</head>
+
+<body>
+	<div id="app">
+		<div id="sidebar" class="active">
+			<div class="sidebar-wrapper active">
+				<div class="sidebar-header">
+					<div class="d-flex justify-content-between">
+						<div class="logo">
+							<a href="index.html"><img style="width: 50px; height: 50px"
+								src="assets/images/logo/account_logo.jpg" alt="Logo" th:text="${session.nguoidung.nhanvien.tenNV}"></a>
+						</div>
+						<div class="toggler">
+							<a href="#" class="sidebar-hide d-xl-none d-block"><i
+								class="bi bi-x bi-middle"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar-menu ">
+					<ul class="menu">
+						<li class="sidebar-title">Menu</li>
+						<li class="sidebar-item  sidebar-item active"><a type="submit" class='sidebar-link' onclick="loadDivTrangChu3()"> <i class="bi bi-grid-fill"></i> <span>Trang chủ</span></a>
+						</li>
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i class="bi bi-stack"></i> <span>Quản lí danh mục</span></a>
+							<ul class="submenu ">
+								<li class="submenu-item "><a type="submit" onclick="loadNhanvien()">Nhân viên</a></li>
+								<li class="submenu-item "><a type="submit" onclick="loadPhongban()">Phòng ban</a></li>
+								<li class="submenu-item "><a type="submit" onclick="loadHanghoa()">Hàng hóa</a></li>
+								<li class="submenu-item "><a type="submit" onclick="loadXemkhachhang()">Khách hàng</a></li>
+							</ul>
+						</li>
+						<li class="sidebar-item  has-sub"><a href="#" class='sidebar-link'> <i class="bi bi-person-badge-fill"></i> <span>Tài khoản</span> </a>
+							<ul class="submenu">
+								<li class="submenu-item"><a type="submit" onclick="loadDoiMatKhauDiv()" >Thay đổi mật khẩu</a></li>
+								<li class="submenu-item "><a  style="text-decoration:none" type="submit" th:href="@{/nhanvien/dangxuat}" >Đăng xuất</a>  </li>
+							</ul>
+						</li>
+					</ul>
+                </div>
+			</div>
+		</div>
+		</div>
+		<div id="main" style="margin-top:0px;padding:0px 0px 0px 10px">
+			
+					<div style = "background-image: url('assets/images/background4.png');height:100vh;margin-top:0px;padding-top:0px">
+						
+					</div>
+
+		</div>
+		
+	<div>
+		
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript">	  
+	function loadDivTrangChu3(){
+		$('#main').empty();
+		$('#main').load("/trangchuhtml",function(data, statusTxt, jqXHR){
+            if(statusTxt == "success"){
+            }
+            if(statusTxt == "error"){
+                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+	}
+	function loadXemkhachhang(){
+		$('#main').empty();
+		$('#main').load("/nvql/xemkhachhanghtml",function(data, statusTxt, jqXHR){
+            if(statusTxt == "success"){
+            }
+            if(statusTxt == "error"){
+                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+	}
+	function loadNhanvien(){
+		$('#main').empty();
+		$('#main').load("/nvql/nhanvienhtml",function(data, statusTxt, jqXHR){
+            if(statusTxt == "success"){
+            	$.ajax({
+    				type : "POST",
+    				url : "nhanvien/tatcanhanvien",
+    				data : {
+    					thangnam:  $('#thangnam').val() , 
+    				},
+    				success : function(result) {
+    					if (result != null) {
+    						var dsnhanvien= new Array();
+    						dsnhanvien=result;
+    						$('#listTable tbody').empty();	
+    						$.each(dsnhanvien,function(i, list) {
+    							var newRow = '<tr>' 
+    							    + '<td>' + dsnhanvien[i].maNV + '</td>'
+    							    + '<td>' + dsnhanvien[i].tenNV + '</td>'
+    							    + '<td>' + dsnhanvien[i].ngaySinh + '</td>'
+    							    + '<td>' + dsnhanvien[i].ngayVao+ '</td>'
+    							    + '<td>' + dsnhanvien[i].diaChi+ '</td>'
+    							    + '<td>' + dsnhanvien[i].phongban.mota+ '</td>'
+    							    + '<td>' + dsnhanvien[i].luongCB+ '</td>'
+    							    + '<td>' + dsnhanvien[i].chucVu+ '</td>'
+    							    + "<td ><a class='edit' type='submit'  onclick='editNV("+ dsnhanvien[i].maNV + ")'>"+"<i  class='material-icons' title='Edit'>"+"&#xE254;</i></a></td>"+ '</tr>';
+    							    + '</tr>'
+    							  	$('#listTable tbody').append(newRow);
+    						});
+    								
+    						console.log("Success: ", result);
+    					} else {
+    						var result = "<h3 style='color:red'> No person found </h3>";
+    						$("#feedback").html(result);
+    					}
+    					
+    					
+    				},
+    				error : function(e) {
+    					console.log("ERROR: ", e);
+    				}
+    		});
+    		
+            }
+            if(statusTxt == "error"){
+                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+	}
+	function loadHanghoa(){
+		$('#main').empty();
+		$('#main').load("/nvql/hanghoahtml",function(data, statusTxt, jqXHR){
+            if(statusTxt == "success"){
+            	$.ajax({
+    				type : "POST",
+    				url : "hanghoa/tatcahanghoa",
+    				data : {
+    					thangnam:  $('#thangnam').val() , 
+    				},
+    				success : function(result) {
+    					if (result != null) {
+    						var dshanghoa= new Array();
+    						dshanghoa=result;
+    						$('#listTable tbody').empty();	
+    						$.each(dshanghoa,function(i, list) {
+    							var id =  dshanghoa[i].maHH;
+    							var id1 = id.substr(2,3);
+    						
+    							var newRow = '<tr>' 
+    							    + '<td>' + dshanghoa[i].maHH + '</td>'
+    							    + '<td>' + dshanghoa[i].tenHang + '</td>'
+    							    + '<td>' + dshanghoa[i].mota + '</td>'
+    							    + '<td>' + dshanghoa[i].donGiaNhap+ '</td>'
+    							    + '<td>' + dshanghoa[i].donGiaXuat+ '</td>'
+    							    + "<td ><a class='edit' type='submit'  onclick='editHH("+id1+")'>"+"<i  class='material-icons' title='Edit'>"+"&#xE254;</i></a></td>"+ '</tr>';
+    							    + '</tr>'
+    							  	$('#listTable tbody').append(newRow); 
+    							  
+    						});		
+    								
+    						console.log("Success: ", result);
+    					} else {
+    						var result = "<h3 style='color:red'> No person found </h3>";
+    						$("#feedback").html(result);
+    					}
+    					
+    					
+    				},
+    				error : function(e) {
+    					console.log("ERROR: ", e); 
+    				}
+    		});
+            }
+            if(statusTxt == "error"){
+                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+	}
+	function loadPhongban(){
+		$('#main').empty();
+		$('#main').load("/nvql/phongbanhtml",function(data, statusTxt, jqXHR){
+            if(statusTxt == "success"){
+            	$.ajax({
+    				type : "POST",
+    				url : "phongban/tatcaphongban",
+    				data : {
+    					thangnam:  $('#thangnam').val() , 
+    				},
+    				success : function(result) {
+    					if (result != null) {
+    						var dsphongban= new Array();
+    						dsphongban=result;
+    						$('#listTable tbody').empty();	
+    						$.each(dsphongban,function(i, list) {
+    							var id =  dsphongban[i].maPhongban;
+    							var id1 = id.substr(1,2);
+    						
+    							var newRow = '<tr>' 
+    							    + '<td>' + dsphongban[i].maPhongban + '</td>'
+    							    + '<td>' + dsphongban[i].mota + '</td>'
+    							    + '<td>' + dsphongban[i].vitriVP + '</td>'
+    							    + "<td ><a class='edit' type='submit'  onclick='editPB("+id1+")'>"+"<i  class='material-icons' title='Edit'>"+"&#xE254;</i></a></td>"+ '</tr>';
+    							    + '</tr>'
+    							  	$('#listTable tbody').append(newRow); 
+    							  
+    						});		
+    								
+    						console.log("Success: ", result);
+    					} else {
+    						var result = "<h3 style='color:red'> No person found </h3>";
+    						$("#feedback").html(result);
+    					}
+    					
+    					
+    				},
+    				error : function(e) {
+    					console.log("ERROR: ", e); 
+    				}
+    		});
+            }
+            if(statusTxt == "error"){
+                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+            }
+        });
+	}
+		function addNV(){
+			var id = $("#id").val();
+			var name = $("#name").val();
+			var formData= {
+				id : id ,
+				name : name
+			}
+			$.ajax({
+				type : 'POST',
+				contentType : "application/json",
+				url :  "nhanvien/add",
+				data : JSON.stringify(formData),
+				dataType : 'json',
+				success : function(data) {
+					Ajax();
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		function searchNV() {
+			var formData= {
+					name : $('#search').val()
+				}
+		
+			$.ajax({
+					type : "GET",
+					data : formData,
+					dataType : 'json',
+					contentType : "application/json",
+					url : "accountant/search",
+					success : function(result) {
+						if (result != null) {
+							$('#listTable tbody').empty();
+							$.each(result,
+									function(i, list) {
+								
+								/*var user = "<td>"+list.id+"</td>" +"<td>"+list.name+"</td>" ; 		
+								$('#All .list').append(user);*/
+							//	 $('#div_table tbody').remove();
+							      var newRow = "<tr id ='" + list.id + "'>" + '<td>' + list.id + '</td>' +  '<td id = "namerow" >' + list.name + '</td>' + '</tr>';
+							      $('#listTable tbody').append(newRow);
+									});
+							console.log("Success: ", result);
+						} else {
+							var result = "<h3 style='color:red'> No person found </h3>";
+							$("#feedback").html(result);
+						}
+					},
+					error : function(e) {
+						console.log("ERROR: ", e);
+					}
+				});
+		}
+	
+		function deleteNV(id){
+			if(confirm("Are you sure you want to delete?")){
+			$.ajax({
+				type : 'DELETE',
+				contentType : "application/json",
+				url :  "accountant/delete/"+id,
+				success : function(data) {
+					Ajax();
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+			}
+			else return false ;
+		}
+		function editNV(id){
+			$.ajax({
+				type : 'GET',
+				contentType : "application/json",
+				url :  "accountant/edit/"+id,
+				success : function(data) {
+					$('#editAccountantModal #id').val(data.id);
+					$('#editAccountantModal #name').val(data.name);
+					$('#editAccountantModal').modal('show');
+				;
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		function updateNV(id){
+			var id = $('#editAccountantModal #id').val();
+			var name = $('#editAccountantModal #name').val();
+			var formData= {
+					id : id ,
+					name : name
+				}
+			$.ajax({
+				type : 'PUT',
+				contentType : "application/json",
+				url :  "accountant/update/"+id,
+				data : JSON.stringify(formData),
+				dataType : 'json',
+				success : function(data) {
+					Ajax();
+				console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		 function loadDoiMatKhauDiv(){
+				$('#main').empty();
+				$('#main').load("/doimatkhau",function(data, statusTxt, jqXHR){
+		            if(statusTxt == "success"){
+		            	
+		            }
+		            if(statusTxt == "error"){
+		                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+		            }
+		        });
+				
+			}
+		
+		</script>
+
+</body>
+
+</html>

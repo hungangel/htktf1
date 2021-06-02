@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">
+	var thangnam="";	
+</script>
+
+</head>
+<body>
+	<div id="div1" class="container-xl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-3">
+						<h2>
+							 <b>Tờ khai thuế</b>
+						</h2>
+					</div>
+					<div class="col-sm-9">
+					<div style="padding-left:410px">
+			<label>Tháng : </label>
+			<input style ="height:35px;text-align:center" type="month" id ="thangnam" name="thangnam">
+			 <a style ="height:33px;width:60px;text-align:center;" type="submit" class="btn btn-danger" onclick="xemTokhaithue()" >Xem  </a>
+		</div>
+				</div>
+				</div>
+		</div>
+		</div>
+		</div>
+	</div>
+	<div id="div2" style="display:none" >
+		<table id ="tokhaithue" class="table table-striped table-hover" border="1">
+			<thead>
+				<tr>
+					<th style="width:5%" >STT</th>
+					<th style="width:60%; text-align:center ">Chỉ tiêu</th>
+					<th style="width:20%">Giá trị HHDV(chưa có thuế)</th>
+					<th style="width:15%">Thuế GTGT</th>
+				</tr>
+				<tr >
+					<td> <b>A</b></td> <td> <b>Không phát sinh hoạt động mua,bán trong kỳ ( đánh dấu "X")</b></td> 
+					<td> </td> 
+					<td> </td>
+				</tr>
+				<tr >
+					<td><b>B</b></td><td> <b>Thuế GTGT còn được khấu trừ từ kì trước chuyển sang</b></td>
+					<td> </td>
+					<td id="thueNokitruoc"> </td>
+				</tr>
+				<tr >
+					<td><b>C</b></td><td> <b>Kê khai thuế GTGT phải nộp Ngân sách nhà nước</b></td>
+					<td> </td>
+					<td> </td>
+				</tr>
+				<tr >
+					<td><b>I</b></td><td>  <b>Hàng hóa, dịch vụ (HHDV) mua vào trong kì</b></td>
+					<td></td>
+					<td> </td>
+				</tr>
+				<tr >
+					<td>1 </td><td>  <b>Giá trị và thuế GTGT của hàng hóa, dịch vụ mua vào</b></td>
+					<td id="doanhsoMua"></td>
+					<td id="thueMua1"> </td>
+				</tr>
+				<tr>
+					<td>2 </td><td>  <b>Tổng số thuế GTGT được khấu trừ kì này</b></td>
+					<td></td>
+					<td id= "thueMua2"> </td>
+				</tr>
+				<tr>
+					<td><b>II </b></td>	<td> <b> Hàng hóa, dịch vụ  bán ra trong kì</b></td>
+					<td></td>
+					<td> </td>
+				</tr>
+				<tr>
+					<td>1 </td><td>  <b>Hàng hóa, dịch vụ bán ra không chịu thuế GTGT</b></td>
+					<td>0</td>
+					<td> </td>
+				</tr>
+				<tr>
+					<td>2 </td><td> <b> Hàng hóa, dịch vụ chịu thuế GTGT</b> </td>
+					<td id ="doanhsoBan1"></td>
+					<td id= "thueKinay1"> </td>
+				</tr>
+				<tr>
+					<td>a </td><td>  Hàng hóa, dịch vụ bán ra chịu thuế suất 0 %</td>
+					<td>0</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>b </td><td>  Hàng hóa, dịch vụ bán ra chịu thuế suất 5 %</td>
+					<td>0</td>
+					<td>0</td>
+				</tr>
+				<tr>
+					<td>c </td><td>  Hàng hóa, dịch vụ bán ra chịu thuế suất 10 %</td>
+					<td id="doanhsoBan2"></td>
+					<td id="thueKinay2"> </td>
+				</tr>
+				<tr>
+					<td>3 </td><td>  <b>Tổng doanh thu và thuế GTGT của HHDV bán ra</b> </td>
+					<td id="doanhsoBan3"></td>
+					<td id="thueKinay3"> </td>
+				</tr>
+				<tr>
+					<td><b>III</b> </td><td>  <b>Thuế GTGT phát sinh trong kì</b> </td>
+					<td></td>
+					<td id="thuecantra"> </td>
+				</tr>
+				
+				<tr>
+					<td><b>IV</b> </td><td>  <b>Điều chỉnh tăng, giảm thuế GTGT của các kì trước</b> </td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td>1</td><td>  <b>Điều chỉnh tăng thuế GTGT của các kì trước</b> </td>
+					<td></td>
+					<td>0 </td>
+				</tr>
+				<tr>
+					<td>2 </td><td>  <b>Điều chỉnh giảm thuế GTGT của các kì trước</b></td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td><b>V</b> </td><td>  <b>Tổng số thuế GTGT đã nộp của các doanh thu kinh doanh xây dựng lắp đặt, bán hàng vãng lai ngoại tỉnh </b></td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td><b>VI</b> </td><td> <b> Xác định nghĩa vụ thuế GTGT phải nộp trong kì</b> </td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td>1 </td><td> <b>Thuế GTGT phải nộp của hoạt động sản suất kinh doanh trong kì</b> </td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td>2 </td><td>  <b>Thuế GTGT mua vào của dự án đầu tư </b></td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td>3 </td><td>  <b>Thuế GTGT  còn phải nộp trong kì</b></td>
+					<td></td>
+					<td> 0</td>
+				</tr>
+				<tr>
+					<td>4 </td><td> <b>Thuế GTGT chưa khấu trừ hết kì này</b> </td>
+					<td></td>
+					<td id="thueNolai1"> </td>
+				</tr>
+				<tr>
+					<td>4.1 </td><td>  Thuế GTGT đề nghị hoàn </td>
+					<td></td>
+					<td> </td>
+				</tr>
+				<tr>
+					<td>4.2 </td><td> Thuế GTGT còn được khấu trừ chuyển sang kì sau </td>
+					<td></td>
+					<td id="thueNolai2"> </td>
+				</tr>
+				
+				
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript">
+		function xemTokhaithue() {
+			thangnam = $('#thangnam').val();
+			if(thangnam.length >0){
+				 $.ajax({
+						type : "POST",
+						url : "baocaothue/xembaocaothuethang/"+thangnam,
+						data : {
+							thangnam:  $('#thangnam').val() , 
+						},
+						success : function(result) {
+							if (result != null) {
+								if(result.masoBaocao !=0){
+									var baocao=result;
+									 var y = document.getElementById("div2");
+									 y.style.display = "block";
+									 
+									document.getElementById('thueNokitruoc').innerHTML = baocao.thueNokitruoc;
+									
+									document.getElementById('doanhsoMua').innerHTML = baocao.doanhsoMua;
+									
+									document.getElementById('thueMua1').innerHTML = baocao.thueMua;
+									document.getElementById('thueMua2').innerHTML = baocao.thueMua;
+									
+									document.getElementById('doanhsoBan1').innerHTML = baocao.doanhsoBan;
+									document.getElementById('doanhsoBan2').innerHTML = baocao.doanhsoBan;
+									document.getElementById('doanhsoBan3').innerHTML = baocao.doanhsoBan;
+									
+									document.getElementById('thueKinay1').innerHTML = baocao.thueKinay;
+									document.getElementById('thueKinay2').innerHTML = baocao.thueKinay;
+									document.getElementById('thueKinay3').innerHTML = baocao.thueKinay;
+									
+									document.getElementById('thuecantra').innerHTML = baocao.thuecantra;
+									
+									document.getElementById('thueNolai1').innerHTML = baocao.thueNolai;
+									document.getElementById('thueNolai2').innerHTML = baocao.thueNolai;
+
+								}
+								else{
+									alert("Chưa thực hiện kê khai thuế tháng này !")
+									var y = document.getElementById("div2");
+									 y.style.display = "none";
+								}
+									console.log("Success: ", result);
+							} else {
+								var result = "<h3 style='color:red'> Khong  co bao cao </h3>";
+								$("#feedback").html(result);
+							}
+						},
+						error : function(e) {
+							console.log("ERROR: ", e);
+						}
+				});
+			}else alert("Hãy chọn 1 tháng để xem")
+		}
+	</script>
+</body>
+</html>

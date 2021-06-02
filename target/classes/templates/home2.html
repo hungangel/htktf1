@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Mazer Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet" href="assets/css/bootstrap.css">
+
+<link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+
+<link rel="stylesheet"
+	href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
+<link rel="stylesheet"
+	href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<link rel="stylesheet" href="assets/css/jquery-ui.min.css">
+<link rel="stylesheet" href="assets/css/table/style1.css">
+<link rel="stylesheet" href="assets/css/table/style1.css">
+<link rel="shortcut icon" href="assets/images/favicon.svg"
+	type="image/x-icon">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+</head>
+
+<body>
+	<div id="app">
+		<div id="sidebar" class="active">
+			<div class="sidebar-wrapper active">
+				<div class="sidebar-header">
+					<div class="d-flex justify-content-between">
+						<div class="logo">
+							<a href="index.html"><img style="width: 50px; height: 50px"
+								src="assets/images/logo/account_logo.jpg" alt="Logo" srcset="">NVKetoan</a>
+						</div>
+						<div class="toggler">
+							<a href="#" class="sidebar-hide d-xl-none d-block"><i
+								class="bi bi-x bi-middle"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar-menu ">
+					<ul class="menu">
+						<li class="sidebar-title">Menu</li>
+
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i class="bi bi-stack"></i> <span>Báo cáo kinh doanh </span>
+							</a>
+							<ul class="submenu ">
+								<li class="submenu-item "><a type="submit" onclick="loadDanhmuchangban()"> 
+									<i class="bi bi-stack"></i> <span>Danh mục hàng bán </span></a>
+								</li>
+									
+								<li class="submenu-item "><a type="submit" onclick="loadDanhmuchangmua()"> 
+									<i class="bi bi-stack"></i> <span>Danh mục hàng mua </span></a>
+								</li>
+								
+								<li class="submenu-item"><a type="submit" onclick="loadBaocaodoanhthu()"> 
+									<i class="bi bi-stack"></i> <span>Báo cáo doanh thu </span></a>
+								</li>
+							</ul>
+						</li>
+						
+						
+						<li class="sidebar-item  has-sub"><a href="#"
+							class='sidebar-link'> <i class="bi bi-stack"></i> <span>Báo cáo thuế </span>
+							</a>
+							<ul class="submenu ">
+								<li class="submenu-item "><a type="submit" onclick="loadKekhaithuemuavao()"> 
+									<i class="bi bi-stack"></i> <span>Kê khai HH, DV mua vào </span></a>
+								</li>
+									
+								<li class="submenu-item "><a type="submit" onclick="loadKekhaithuebanra()"> 
+									<i class="bi bi-stack"></i> <span>Kê khai HH, DV bán ra</span></a>
+								</li>
+								
+								<li class="submenu-item"><a type="submit" onclick="loadXembaocaothue()"> 
+									<i class="bi bi-stack"></i> <span>Xem báo cáo thuế </span></a>
+								</li>
+							</ul>
+						</li>
+					</ul>		
+                </div>
+               
+						<button class="sidebar-toggler btn x">
+							<i data-feather="x"></i>
+						</button>
+				</div>
+			</div>
+			<div id="main">
+				
+			</div>
+			<div id="getAll">
+
+				<ul class="list-group">
+				</ul>
+			</div>
+
+			<div id="edit"></div>
+		</div>
+		
+	<div>
+		<footer>
+			<div class="footer clearfix mb-0 text-muted">
+				<div class="float-start">
+					<p>2021 &copy; Mazer</p>
+				</div>
+				<div class="float-end">
+					<p>
+						Crafted with <span class="text-danger"><i
+							class="bi bi-heart"></i></span> by <a href="http://ahmadsaugi.com">A.
+							Saugi</a>
+					</p>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	
+	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+	<script type="text/javascript">	
+     	//	$('#div_table').hide();
+     </script>
+
+	<script type="text/javascript">	       
+		
+	
+		function loadBaocaodoanhsobanhang(){
+			$('#main').empty();
+			$('#main').load("/home/hoadonhtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadKekhaithuemuavao(){
+			$('#main').empty();
+			$('#main').load("/home/kekhaidonmuavaohtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadKekhaithuebanra(){
+			$('#main').empty();
+			$('#main').load("/home/kekhaidonbanrahtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadBaocaodoanhthu(){
+			$('#main').empty();
+			$('#main').load("/home/baocaodoanhthuhtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadXembaocaothue(){
+			$('#main').empty();
+			$('#main').load("/home/xembaocaothuehtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadDanhmuchangban(){
+			$('#main').empty();
+			$('#main').load("/home/danhmuchangbanhtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function loadDanhmuchangmua(){
+			$('#main').empty();
+			$('#main').load("/home/danhmuchangmuahtml",function(data, statusTxt, jqXHR){
+	            if(statusTxt == "success"){
+	            }
+	            if(statusTxt == "error"){
+	                alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+	            }
+	        });
+		}
+		function addNV(){
+			var id = $("#id").val();
+			var name = $("#name").val();
+			var formData= {
+				id : id ,
+				name : name
+			}
+			$.ajax({
+				type : 'POST',
+				contentType : "application/json",
+				url :  "accountant/add",
+				data : JSON.stringify(formData),
+				dataType : 'json',
+				success : function(data) {
+					Ajax();
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		function searchNV() {
+			var formData= {
+					name : $('#search').val()
+				}
+		
+			$.ajax({
+					type : "GET",
+					data : formData,
+					dataType : 'json',
+					contentType : "application/json",
+					url : "accountant/search",
+					success : function(result) {
+						if (result != null) {
+							$('#listTable tbody').empty();
+							$.each(result,
+									function(i, list) {
+								
+								/*var user = "<td>"+list.id+"</td>" +"<td>"+list.name+"</td>" ; 		
+								$('#All .list').append(user);*/
+							//	 $('#div_table tbody').remove();
+							      var newRow = "<tr id ='" + list.id + "'>" + '<td>' + list.id + '</td>' +  '<td id = "namerow" >' + list.name + '</td>' + '</tr>';
+							      $('#listTable tbody').append(newRow);
+									});
+							console.log("Success: ", result);
+						} else {
+							var result = "<h3 style='color:red'> No person found </h3>";
+							$("#feedback").html(result);
+						}
+					},
+					error : function(e) {
+						console.log("ERROR: ", e);
+					}
+				});
+		}
+	
+		function deleteNV(id){
+			if(confirm("Are you sure you want to delete?")){
+			$.ajax({
+				type : 'DELETE',
+				contentType : "application/json",
+				url :  "accountant/delete/"+id,
+				success : function(data) {
+					Ajax();
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+			}
+			else return false ;
+		}
+		function editNV(id){
+			$.ajax({
+				type : 'GET',
+				contentType : "application/json",
+				url :  "accountant/edit/"+id,
+				success : function(data) {
+					$('#editAccountantModal #id').val(data.id);
+					$('#editAccountantModal #name').val(data.name);
+					$('#editAccountantModal').modal('show');
+				;
+					console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		function updateNV(id){
+			var id = $('#editAccountantModal #id').val();
+			var name = $('#editAccountantModal #name').val();
+			var formData= {
+					id : id ,
+					name : name
+				}
+			$.ajax({
+				type : 'PUT',
+				contentType : "application/json",
+				url :  "accountant/update/"+id,
+				data : JSON.stringify(formData),
+				dataType : 'json',
+				success : function(data) {
+					Ajax();
+				console.log("SUCCESS: ", data);
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		</script>
+
+</body>
+
+</html>

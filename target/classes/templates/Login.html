@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Hệ thống kế toán</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style2.css">
+    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/pages/auth.css">
+  <style>
+  	#login{
+    	width:34%;
+    	margin-left:33%;
+    	margin-top : 6%;
+    	height : 350px;
+    	}
+    </style>
+</head>
+
+<body>
+                <div id="login" >
+                    <div class="auth-logo">
+                        <a href="index.html"><img  style ="width :400px ;height:100px " src="assets/images/logo/login.png" alt="logo"></a>
+                    </div>
+                    <h1 class="auth-title">Đăng nhập.</h1>
+                    <p class="auth-subtitle mb-5">Đăng nhập bằng tài khoản bạn được cung cấp</p>
+                    <form th:action="@{/home}" method = "POST">
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="text" class="form-control form-control-xl" placeholder="Tài khoản" name = "taikhoan">
+                            <div class="form-control-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+                        </div>
+                        <div class="form-group position-relative has-icon-left mb-4">
+                            <input type="password" class="form-control form-control-xl" placeholder="Mật khẩu" name="matkhau">
+                            <div class="form-control-icon">
+                                <i class="bi bi-shield-lock"></i>
+                            </div>
+                        </div>
+                        <div class="form-check form-check-lg d-flex align-items-end">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label text-gray-600" for="flexCheckDefault">
+                                Nhớ tài khoản
+                            </label>
+                        </div>
+                        <button  class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Đăng nhập</button>
+                        </form>.
+                </div>
+      
+</body>
+				
+</html>

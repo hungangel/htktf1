@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/jquery-ui.min.js"></script>
+	
+	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+</head>
+<body>
+	
+	<label>Chọn phòng ban : </label><br>
+	<div id="selectBox1">
+		<select id="selectPhongBan">
+  </select>
+	</div><br>
+	<label>Chọn tháng :  </label>
+	<div id="selectBox2">
+		<select  id="selectThang">
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+     <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+  </select>
+	</div><br>
+	<button type="submit" onclick="tinhLuong()">Tính lương </button>
+	<script  type="text/javascript">
+	function tinhLuong() {	
+		//	var idphongban = 
+		//	var thang = 
+			alert($('#selectPhongBan').val());
+		$.ajax({
+				type : "POST",
+				url : "bangluong/tinhluong",
+				data : {
+					phongban:  $('#selectPhongBan').val() , 
+					thang: $('#selectThang').val() ,
+				},
+				success : function(result) {
+					if (result != null) {
+						console.log("Success: ", result);
+					} else {
+						var result = "<h3 style='color:red'> No person found </h3>";
+						$("#feedback").html(result);
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+		}
+		</script>
+</body>
+</html>

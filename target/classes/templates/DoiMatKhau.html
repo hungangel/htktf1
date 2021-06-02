@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+</head>
+
+<body>
+	<div class="col-md-9 m-auto"  style="padding-top:60px">
+ <div class="card">
+  <div class="card-header " style="color:Yellow;background-color:#435d7d"><b>ĐỔI MẬT KHẨU<b></b></div>
+  <div class="card-body">
+    <div class="form-horizontal" style="margin-top:20px;margin-bottom:20px" >           
+             <input type="hidden" class="form-control" disabled id="taikhoan" th:value="${session.nguoidung.username}">	 
+             <input type="hidden" class="form-control" disabled id="matkhau" th:value="${session.nguoidung.password}">	
+
+        <p> <label>Mật khẩu cũ</label>            
+            <input type="password" class="form-control" id="matkhaucu" name="pass_old"> 
+        </p>
+        <p> <label>Mật khẩu mới:</label>         
+           <input type="password" class="form-control" id="matkhaumoi1" name="pass_new1" >
+        </p>
+        <p><label>Gõ lại mật khẩu mới:</label>
+          <input type="password" class="form-control" id="matkhaumoi2" name="pass_new2" >
+        </p>  
+        <p><button type="submit" class="btn btn-warning" onclick ="doiMatKhau()">Lưu</button></p>
+        
+    </div> 
+  </div>
+</div>
+</div>   
+
+	<script type="text/javascript">	
+		function doiMatKhau(){
+			var taikhoan = $('#taikhoan').val();
+			var matkhau = $('#matkhau').val();
+			var passold =  $('#matkhaucu').val();
+			var pass1 =  $('#matkhaumoi1').val();
+			var pass2 = $('#matkhaumoi2').val();
+			if(pass1!=pass2){
+				alert("Mật khẩu mới không trùng khớp!");
+			}
+			else if(passold!=matkhau){
+				alert("Mật khẩu cũ không chính xác!");
+			}
+			else if (pass1==matkhau){
+				alert("Mật khẩu mới không được trùng với mật khẩu cũ");
+			}
+			else {
+			$.ajax({
+				type : "POST",
+				url : "taikhoan/doimatkhau",
+				data : {
+					taikhoan:  $('#taikhoan').val(), 
+					matkhau: $('#matkhaumoi1').val() ,
+				},
+				success : function(result) {
+					if (result != null) {
+						alert("Đã thay đổi mật khẩu");
+						$('#matkhau').val($('#matkhaumoi1').val());
+						$('#matkhaucu').val("");
+						$('#matkhaumoi1').val("");
+						$('#matkhaumoi2').val("");
+					//	alert($('#matkhau').val());
+						console.log("Success: ", result);
+					} else {
+						var result = "<h3 style='color:red'> No person found </h3>";
+						$("#feedback").html(result);
+					}
+				},
+				error : function(e) {
+					console.log("ERROR: ", e);
+				}
+			});
+			}
+		}
+	
+	</script>
+	
+	
+</body>
+
+</html>

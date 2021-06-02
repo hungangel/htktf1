@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<style>
+.thang {
+	font-weight: bold !important;
+	color: #fff !important;
+	background: #bc0000 !important;
+	text-transform: uppercase;
+}
+
+.phongbanOption {
+	font-weight: bold !important;
+	color: #fff !important;
+	background: #bc0000 !important;
+	text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+	
+
+	<div class="container-xl" style="float: left">
+		<div class="table-responsive">
+			<div class="table-wrapper">
+				<div class="table-title">
+					<div class="row">
+						<div class="col-sm-3">
+							<h2>
+								Bảng lương <b></b>
+							</h2>
+						</div>
+						<div class="col-sm-9">
+
+
+							<a style="float: right;" type="submit" class="btn btn-danger"
+								onclick="xemBangLuong()"> Xem bảng lương </a> <a
+								style="float: right;" type="submit" class="btn btn-danger"
+								onclick="tinhLuong()"> Tính lương </a>
+
+							<div id="selectBox1" style="float: left; margin-left: 160px">
+								<select id="selectPhongBan" style="height: 31px"  >
+									
+								</select>
+							</div>
+							<input id="selectThang"
+								style="margin-left: 10px; height: 31px; text-align: center"
+								type="month"  value="2021-06">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<table id="listTable" class="table table-striped table-hover">
+				<thead>
+					<tr>
+
+						<th style="width: 17%">Mã bảng lương</th>
+						<th style="width: 17%">Nhân viên</th>
+						<th style="width: 17%">Số công</th>
+						<th style="width: 16%">Lương (VND)</th>
+						<th style="width: 16%">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+	  <script type="text/javascript">
+		function tinhLuong() {
+			$
+					.ajax({
+						type : "POST",
+						url : "bangluong/tinhluong",
+						data : {
+							phongban : $('#selectPhongBan').val(),
+							thang : $('#selectThang').val(),
+						},
+						success : function(result) {
+							xemBangLuong();
+							if (result != null) {
+								console.log("Success: ", result);
+							} else {
+								var result = "<h3 style='color:red'> No person found </h3>";
+								$("#feedback").html(result);
+							}
+						},
+						error : function(e) {
+							console.log("ERROR: ", e);
+						}
+					});
+		}
+		function xemBangLuong() {
+			$
+					.ajax({
+						type : "GET",
+						url : "bangluong/xembangluong",
+						data : {
+							phongban : $('#selectPhongBan').val(),
+							thang : $('#selectThang').val(),
+						},
+						success : function(result) {
+							if (result != null) {
+								$('#listTable tbody').empty();
+								$
+										.each(
+												result,
+												function(i, list) {
+													var newRow = '<tr>'
+															+ '<td>'
+															+ list.maBL
+															+ '</td>'
+															+ '<td>'
+															+ list.chamcong.nhanvien.tenNV
+															+ '</td>'
+															+ '<td>'
+															+ list.chamcong.soCong
+															+ '</td>'
+															+ '<td>'
+															+ list.thuclinh
+															+ '</td>'
+															+'<td>'
+															+ "<a class='delete' ><i class='material-icons' title='Delete'  onclick='deleteBl("
+															+ list.maBL
+															+ ")'>&#xE872;</i></a></td>"
+															+ '</tr>';
+													$('#listTable tbody')
+															.append(newRow);
+												});
+								/*	var tongRow =  '<tr>'+ '<td>' + '</td>' + '<td>' + '</td>'+ '<td>' + '</td>'+'<td>'  +'</td>'+'<td style="color:red">' +'Tổng chi phí: ' + '</td>' +   '<td td style="color:red">'  + '90000' + '</td>'+'</tr>' 
+									
+									$('#listTable tbody').append(tongRow);*/
+								console.log("Success: ", result);
+							} else {
+								var result = "<h3 style='color:red'> No person found </h3>";
+								$("#feedback").html(result);
+							}
+						},
+						error : function(e) {
+							console.log("ERROR: ", e);
+						}
+					});
+		}
+		function deleteBl(id){
+			if(confirm("Are you sure you want to delete?")){
+				$.ajax({
+					type : 'DELETE',
+					url :  "bangluong/delete/"+id,
+					success : function(data) {
+						xemBangLuong();
+						console.log("SUCCESS: ", data);
+					},
+					error : function(e) {
+						console.log("ERROR: ", e);
+					}
+				});
+				}
+				else return false ;
+		}
+	</script>
+</body>
+</html>
